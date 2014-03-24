@@ -33,7 +33,7 @@ class BlockSearch extends Module
 	{
 		$this->name = 'blocksearch';
 		$this->tab = 'search_filter';
-		$this->version = 1.4;
+		$this->version = 1.5;
 		$this->author = 'PrestaShop';
 		$this->need_instance = 0;
 
@@ -41,6 +41,7 @@ class BlockSearch extends Module
 
 		$this->displayName = $this->l('Quick search block');
 		$this->description = $this->l('Adds a quick search field to your website.');
+		$this->ps_versions_compliancy = array('min' => '1.5.6.1', 'max' => _PS_VERSION_);
 	}
 
 	public function install()

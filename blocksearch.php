@@ -41,7 +41,7 @@ class BlockSearch extends Module
 
 		$this->displayName = $this->l('Quick search block');
 		$this->description = $this->l('Adds a quick search field to your website.');
-		$this->ps_versions_compliancy = array('min' => '1.5.6.1', 'max' => _PS_VERSION_);
+		$this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
 	}
 
 	public function install()

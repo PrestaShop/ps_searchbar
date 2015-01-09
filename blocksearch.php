@@ -50,14 +50,14 @@ class BlockSearch extends Module
 			return false;
 		return true;
 	}
-	
+
 	public function hookdisplayMobileTopSiteMap($params)
 	{
 		$this->smarty->assign(array('hook_mobile' => true, 'instantsearch' => false));
 		$params['hook_mobile'] = true;
 		return $this->hookTop($params);
 	}
-	
+
 	/*
 public function hookDisplayMobileHeader($params)
 	{
@@ -66,7 +66,7 @@ public function hookDisplayMobileHeader($params)
 		$this->context->controller->addCSS(_THEME_CSS_DIR_.'product_list.css');
 	}
 */
-	
+
 	public function hookHeader($params)
 	{
 		$this->context->controller->addCSS(($this->_path).'blocksearch.css', 'all');
@@ -119,7 +119,7 @@ public function hookDisplayMobileHeader($params)
 		Media::addJsDef(array('blocksearch_type' => 'top'));
 		return $this->display(__FILE__, 'blocksearch-top.tpl', Tools::getValue('search_query') ? null : $key);
 	}
-	
+
 	public function hookDisplayNav($params)
 	{
 		return $this->hookTop($params);

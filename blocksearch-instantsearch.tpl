@@ -65,7 +65,7 @@ $('document').ready(function() {
 	var $input = $("#search_query_{$blocksearch_type}");
 
 	$input.on('keyup', function() {
-		if ($(this).val().length > 0)
+		if ($(this).val().length > 4)
 		{
 			stopInstantSearchQueries();
 			instantSearchQuery = $.ajax({
@@ -77,6 +77,9 @@ $('document').ready(function() {
 				},
 				dataType: 'html',
 				type: 'POST',
+				headers: { "cache-control": "no-cache" },
+				async: true,
+				cache: false,
 				success: function(data){
 					if($input.val().length > 0)
 					{

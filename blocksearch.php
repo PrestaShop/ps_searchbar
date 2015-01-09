@@ -69,11 +69,15 @@ public function hookDisplayMobileHeader($params)
 	
 	public function hookHeader($params)
 	{
+		$this->context->controller->addCSS(($this->_path).'blocksearch.css', 'all');
+
 		if (Configuration::get('PS_SEARCH_AJAX'))
 			$this->context->controller->addJqueryPlugin('autocomplete');
-		$this->context->controller->addCSS(_THEME_CSS_DIR_.'product_list.css');
-		$this->context->controller->addCSS(($this->_path).'blocksearch.css', 'all');
-		if (Configuration::get('PS_SEARCH_AJAX'))
+
+		if (Configuration::get('PS_INSTANT_SEARCH'))
+			$this->context->controller->addCSS(_THEME_CSS_DIR_.'product_list.css');
+
+		if (Configuration::get('PS_SEARCH_AJAX') || Configuration::get('PS_INSTANT_SEARCH'))
 		{
 			Media::addJsDef(array('search_url' => $this->context->link->getPageLink('search', Tools::usingSecureMode())));
 			$this->context->controller->addJS(($this->_path).'blocksearch.js');

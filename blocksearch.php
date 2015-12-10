@@ -27,13 +27,15 @@
 if (!defined('_PS_VERSION_'))
 	exit;
 
-class BlockSearch extends Module
+use PrestaShop\PrestaShop\Core\Business\Module\WidgetInterface;
+
+class BlockSearch extends Module implements WidgetInterface
 {
 	public function __construct()
 	{
 		$this->name = 'blocksearch';
 		$this->tab = 'search_filter';
-		$this->version = '1.7.0';
+		$this->version = '2.0.0';
 		$this->author = 'PrestaShop';
 		$this->need_instance = 0;
 
@@ -41,84 +43,40 @@ class BlockSearch extends Module
 
 		$this->displayName = $this->l('Quick search block');
 		$this->description = $this->l('Adds a quick search field to your website.');
-		$this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
+		$this->ps_versions_compliancy = array('min' => '1.7', 'max' => _PS_VERSION_);
 	}
 
 	public function install()
 	{
-		if (!parent::install() || !$this->registerHook('top') || !$this->registerHook('header') || !$this->registerHook('displayMobileTopSiteMap') || !$this->registerHook('displaySearch'))
-			return false;
-		return true;
+		return parent::install() && $this->registerHook('top') && $this->registerHook('displaySearch') && $this->registerHook('header');
 	}
 
-	public function hookdisplayMobileTopSiteMap($params)
+	public function getWidgetVariables($hookName, array $configuration = [])
 	{
-		$this->smarty->assign(array('hook_mobile' => true, 'instantsearch' => false));
-		$params['hook_mobile'] = true;
-		return $this->hookTop($params);
-	}
+		$widgetVariables = [
+			'search_controller_url' => $this->context->link->getPageLink('search')
+		];
 
-	public function hookHeader($params)
-	{
-
-	}
-
-	public function hookLeftColumn($params)
-	{
-		return $this->hookRightColumn($params);
-	}
-
-	public function hookRightColumn($params)
-	{
-		if (Tools::getValue('search_query') || !$this->isCached('blocksearch.tpl', $this->getCacheId()))
-		{
-			$this->calculHookCommon($params);
-			$this->smarty->assign(array(
-				'blocksearch_type' => 'block',
-				'search_query' => (string)Tools::getValue('search_query')
-				)
-			);
+		if (!array_key_exists(
+			'search_string',
+			$this->context->smarty->getTemplateVars()
+		)) {
+			$widgetVariables['search_string'] = '';
 		}
-		Media::addJsDef(array('blocksearch_type' => 'block'));
-		return $this->display(__FILE__, 'blocksearch.tpl', Tools::getValue('search_query') ? null : $this->getCacheId());
+		return $widgetVariables;
 	}
 
-	public function hookTop($params)
+	public function renderWidget($hookName, array $configuration = [])
 	{
-		$key = $this->getCacheId('blocksearch-top'.((!isset($params['hook_mobile']) || !$params['hook_mobile']) ? '' : '-hook_mobile'));
-		if (Tools::getValue('search_query') || !$this->isCached('blocksearch-top.tpl', $key))
-		{
-			$this->calculHookCommon($params);
-			$this->smarty->assign(array(
-				'blocksearch_type' => 'top',
-				'search_query' => (string)Tools::getValue('search_query')
-				)
-			);
-		}
-		Media::addJsDef(array('blocksearch_type' => 'top'));
-		return $this->display(__FILE__, 'blocksearch-top.tpl', Tools::getValue('search_query') ? null : $key);
+		$this->smarty->assign($this->getWidgetVariables($hookName, $configuration));
+		return $this->display(__FILE__, 'blocksearch.tpl');
 	}
 
-	public function hookDisplayNav($params)
+	public function hookHeader()
 	{
-		return $this->hookTop($params);
-	}
-
-	public function hookDisplaySearch($params)
-    {
-        return $this->hookRightColumn($params);
-    }
-
-	private function calculHookCommon($params)
-	{
-		$this->smarty->assign(array(
-			'ENT_QUOTES' =>		ENT_QUOTES,
-			'search_ssl' =>		Tools::usingSecureMode(),
-			'ajaxsearch' =>		Configuration::get('PS_SEARCH_AJAX'),
-			'instantsearch' =>	Configuration::get('PS_INSTANT_SEARCH'),
-			'self' =>			dirname(__FILE__),
-		));
-
-		return true;
+		$this->context->controller->addJqueryUI('ui.autocomplete');
+		$this->context->controller->addJS(
+			$this->_path . 'blocksearch.js'
+		);
 	}
 }

@@ -29,19 +29,19 @@ if (!defined('_PS_VERSION_'))
 
 use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
 
-class BlockSearch extends Module implements WidgetInterface
+class Ps_Searchbar extends Module implements WidgetInterface
 {
 	public function __construct()
 	{
-		$this->name = 'blocksearch';
+		$this->name = 'ps_searchbar';
 		$this->tab = 'search_filter';
-		$this->version = '2.0.0';
+		$this->version = '1.0.0';
 		$this->author = 'PrestaShop';
 		$this->need_instance = 0;
 
 		parent::__construct();
 
-		$this->displayName = $this->l('Quick search block');
+		$this->displayName = $this->l('Search bar');
 		$this->description = $this->l('Adds a quick search field to your website.');
 		$this->ps_versions_compliancy = array('min' => '1.7', 'max' => _PS_VERSION_);
 	}
@@ -69,14 +69,14 @@ class BlockSearch extends Module implements WidgetInterface
 	public function renderWidget($hookName, array $configuration = [])
 	{
 		$this->smarty->assign($this->getWidgetVariables($hookName, $configuration));
-		return $this->display(__FILE__, 'blocksearch.tpl');
+		return $this->display(__FILE__, 'ps_searchbar.tpl');
 	}
 
 	public function hookHeader()
 	{
 		$this->context->controller->addJqueryUI('ui.autocomplete');
 		$this->context->controller->addJS(
-			$this->_path . 'blocksearch.js'
+			$this->_path . 'ps_searchbar.js'
 		);
 	}
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <module>
-	<name>blocksearch</name>
-	<displayName><![CDATA[Quick search block]]></displayName>
-	<version><![CDATA[1.7.0]]></version>
-	<description><![CDATA[Adds a quick search field to your website.]]></description>
+	<name>ps_searchbar</name>
+	<displayName><![CDATA[Search bar]]></displayName>
+	<version><![CDATA[1.0.0]]></version>
+	<description><![CDATA[Adds a quick search bar to your website.]]></description>
 	<author><![CDATA[PrestaShop]]></author>
 	<tab><![CDATA[search_filter]]></tab>
 	<is_configurable>0</is_configurable>

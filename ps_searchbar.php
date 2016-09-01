@@ -46,9 +46,13 @@ class Ps_Searchbar extends Module implements WidgetInterface
 		$this->ps_versions_compliancy = array('min' => '1.7', 'max' => _PS_VERSION_);
 	}
 
-	public function install()
+    public function install()
 	{
-		return parent::install() && $this->registerHook('top') && $this->registerHook('displaySearch') && $this->registerHook('header');
+		return parent::install()
+            && $this->registerHook('top')
+            && $this->registerHook('displaySearch')
+            && $this->registerHook('header')
+        ;
 	}
 
 	public function getWidgetVariables($hookName, array $configuration = [])

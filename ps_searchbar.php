@@ -24,63 +24,66 @@
 *  International Registered Trademark & Property of PrestaShop SA
 */
 
-if (!defined('_PS_VERSION_'))
-	exit;
+if (!defined('_PS_VERSION_')) {
+    exit;
+}
 
 use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
 
 class Ps_Searchbar extends Module implements WidgetInterface
 {
-	public function __construct()
-	{
-		$this->name = 'ps_searchbar';
-		$this->tab = 'search_filter';
-		$this->version = '1.0.0';
-		$this->author = 'PrestaShop';
-		$this->need_instance = 0;
+    public function __construct()
+    {
+        $this->name = 'ps_searchbar';
+        $this->tab = 'search_filter';
+        $this->version = '1.0.0';
+        $this->author = 'PrestaShop';
+        $this->need_instance = 0;
 
-		parent::__construct();
+        parent::__construct();
 
-		$this->displayName = $this->l('Search bar');
-		$this->description = $this->l('Adds a quick search field to your website.');
-		$this->ps_versions_compliancy = array('min' => '1.7', 'max' => _PS_VERSION_);
-	}
+        $this->displayName = $this->l('Search bar');
+        $this->description = $this->l('Adds a quick search field to your website.');
+        $this->ps_versions_compliancy = array('min' => '1.7', 'max' => _PS_VERSION_);
+    }
 
     public function install()
-	{
-		return parent::install()
+    {
+        return parent::install()
             && $this->registerHook('top')
             && $this->registerHook('displaySearch')
             && $this->registerHook('header')
         ;
-	}
+    }
 
-	public function getWidgetVariables($hookName, array $configuration = [])
-	{
-		$widgetVariables = [
-			'search_controller_url' => $this->context->link->getPageLink('search')
-		];
+    public function getWidgetVariables($hookName, array $configuration = [])
+    {
+        $widgetVariables = [
+            'search_controller_url' => $this->context->link->getPageLink('search'),
+        ];
 
-		if (!array_key_exists(
-			'search_string',
-			$this->context->smarty->getTemplateVars()
-		)) {
-			$widgetVariables['search_string'] = '';
-		}
-		return $widgetVariables;
-	}
+        if (!array_key_exists(
+            'search_string',
+            $this->context->smarty->getTemplateVars()
+        )) {
+            $widgetVariables['search_string'] = '';
+        }
 
-	public function renderWidget($hookName, array $configuration = [])
-	{
-		$this->smarty->assign($this->getWidgetVariables($hookName, $configuration));
-		return $this->display(__FILE__, 'ps_searchbar.tpl');
-	}
+        return $widgetVariables;
+    }
 
-	public function hookHeader()
-	{
-		$this->context->controller->addJqueryUI('ui.autocomplete');
-		$this->context->controller->addJS(
-			$this->_path . 'ps_searchbar.js'
-		);
-	}
+    public function renderWidget($hookName, array $configuration = [])
+    {
+        $this->smarty->assign($this->getWidgetVariables($hookName, $configuration));
+
+        return $this->display(__FILE__, 'ps_searchbar.tpl');
+    }
+
+    public function hookHeader()
+    {
+        $this->context->controller->addJqueryUI('ui.autocomplete');
+        $this->context->controller->addJS(
+            $this->_path.'ps_searchbar.js'
+        );
+    }
 }

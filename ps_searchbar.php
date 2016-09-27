@@ -77,7 +77,7 @@ class Ps_Searchbar extends Module implements WidgetInterface
     {
         $this->smarty->assign($this->getWidgetVariables($hookName, $configuration));
 
-        return $this->display(__FILE__, 'ps_searchbar.tpl');
+        return $this->fetch('module:ps_searchbar/ps_searchbar.tpl');
     }
 
     public function hookHeader()

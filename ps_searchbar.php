@@ -36,7 +36,7 @@ class Ps_Searchbar extends Module implements WidgetInterface
     {
         $this->name = 'ps_searchbar';
         $this->tab = 'search_filter';
-        $this->version = '1.0.2';
+        $this->version = '1.0.3';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
 

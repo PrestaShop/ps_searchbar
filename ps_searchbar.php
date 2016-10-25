@@ -83,8 +83,6 @@ class Ps_Searchbar extends Module implements WidgetInterface
     public function hookHeader()
     {
         $this->context->controller->addJqueryUI('ui.autocomplete');
-        $this->context->controller->addJS(
-            $this->_path.'ps_searchbar.js'
-        );
+        $this->context->controller->registerJavascript('modules-searchbar', 'modules/'.$this->name.'/ps_searchbar.js', ['position' => 'bottom', 'priority' => 150]);
     }
 }

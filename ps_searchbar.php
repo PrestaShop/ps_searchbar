@@ -32,19 +32,23 @@ use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
 
 class Ps_Searchbar extends Module implements WidgetInterface
 {
+    private $templateFile;
+
     public function __construct()
     {
         $this->name = 'ps_searchbar';
-        $this->tab = 'search_filter';
-        $this->version = '1.0.4';
         $this->author = 'PrestaShop';
+        $this->version = '1.0.4';
         $this->need_instance = 0;
 
         parent::__construct();
 
         $this->displayName = $this->l('Search bar');
         $this->description = $this->l('Adds a quick search field to your website.');
+
         $this->ps_versions_compliancy = array('min' => '1.7.0.0', 'max' => _PS_VERSION_);
+
+        $this->templateFile = 'module:ps_searchbar/ps_searchbar.tpl';
     }
 
     public function install()
@@ -56,17 +60,19 @@ class Ps_Searchbar extends Module implements WidgetInterface
         ;
     }
 
+    public function hookHeader()
+    {
+        $this->context->controller->addJqueryUI('ui.autocomplete');
+        $this->context->controller->registerJavascript('modules-searchbar', 'modules/'.$this->name.'/ps_searchbar.js', ['position' => 'bottom', 'priority' => 150]);
+    }
 
     public function getWidgetVariables($hookName, array $configuration = [])
     {
-        $widgetVariables = [
+        $widgetVariables = array(
             'search_controller_url' => $this->context->link->getPageLink('search'),
-        ];
+        );
 
-        if (!array_key_exists(
-            'search_string',
-            $this->context->smarty->getTemplateVars()
-        )) {
+        if (!array_key_exists('search_string', $this->context->smarty->getTemplateVars())) {
             $widgetVariables['search_string'] = '';
         }
 
@@ -77,12 +83,6 @@ class Ps_Searchbar extends Module implements WidgetInterface
     {
         $this->smarty->assign($this->getWidgetVariables($hookName, $configuration));
 
-        return $this->fetch('module:ps_searchbar/ps_searchbar.tpl');
-    }
-
-    public function hookHeader()
-    {
-        $this->context->controller->addJqueryUI('ui.autocomplete');
-        $this->context->controller->registerJavascript('modules-searchbar', 'modules/'.$this->name.'/ps_searchbar.js', ['position' => 'bottom', 'priority' => 150]);
+        return $this->fetch($this->templateFile);
     }
 }

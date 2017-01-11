@@ -28,7 +28,7 @@
 		<input type="hidden" name="controller" value="search">
 		<input type="text" name="s" value="{$search_string}">
 		<button type="submit">
-			{l s='Search' mod='ps_searchbar'}
+			{l s='Search' d='Modules.Searchbar.Shop'}
 		</button>
 	</form>
 </div>

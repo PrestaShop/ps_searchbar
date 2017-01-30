@@ -43,10 +43,10 @@ class Ps_Searchbar extends Module implements WidgetInterface
 
         parent::__construct();
 
-        $this->displayName = $this->l('Search bar');
-        $this->description = $this->l('Adds a quick search field to your website.');
+        $this->displayName = $this->trans('Search bar', array(), 'Modules.Searchbar.Admin');
+        $this->description = $this->trans('Adds a quick search field to your website.', array(), 'Modules.Searchbar.Admin');
 
-        $this->ps_versions_compliancy = array('min' => '1.7.0.0', 'max' => _PS_VERSION_);
+        $this->ps_versions_compliancy = array('min' => '1.7.1.0', 'max' => _PS_VERSION_);
 
         $this->templateFile = 'module:ps_searchbar/ps_searchbar.tpl';
     }

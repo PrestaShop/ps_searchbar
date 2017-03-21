@@ -69,7 +69,7 @@ class Ps_Searchbar extends Module implements WidgetInterface
     public function getWidgetVariables($hookName, array $configuration = [])
     {
         $widgetVariables = array(
-            'search_controller_url' => $this->context->link->getPageLink('search'),
+            'search_controller_url' => $this->context->link->getPageLink('search', null, null, null, false, null, true),
         );
 
         if (!array_key_exists('search_string', $this->context->smarty->getTemplateVars())) {

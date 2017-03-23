@@ -18,7 +18,7 @@ $(document).ready(function () {
 
     $searchBox.psBlockSearchAutocomplete({
         source: function (query, response) {
-            $.get(searchURL, {
+            $.post(searchURL, {
                 s: query.term,
                 resultsPerPage: 10
             }, null, 'json')

@@ -4,22 +4,11 @@ $(document).ready(function () {
     var $searchBox    = $searchWidget.find('input[type=text]');
     var searchURL     = $searchWidget.attr('data-search-controller-url');
 
-    $.widget('prestashop.psBlockSearchAutocomplete', $.ui.autocomplete, {
-        _renderItem: function (ul, product) {
-            return $("<li>")
-                .append($("<a>")
-                    .append($("<span>").html(product.category_name).addClass("category"))
-                    .append($("<span>").html(' > ').addClass("separator"))
-                    .append($("<span>").html(product.name).addClass("product"))
-                ).appendTo(ul)
-            ;
-        }
-    });
-
-    $searchBox.psBlockSearchAutocomplete({
+    $searchBox.autoComplete({
+        minChars: 2,
         source: function (query, response) {
             $.post(searchURL, {
-                s: query.term,
+                s: query,
                 resultsPerPage: 10
             }, null, 'json')
             .then(function (resp) {
@@ -27,9 +16,17 @@ $(document).ready(function () {
             })
             .fail(response);
         },
-        select: function (event, ui) {
-            var url = ui.item.url;
-            window.location.href = url;
+        renderItem: function (product, search) {
+            console.log(search);
+            return '<div class="autocomplete-suggestion" data-url="' + product.url + '">' +
+            '<span class="category">' + product.category_name + '</span>' +
+            '<span class="separator"> > </span>' +
+            '<span class="product">' + product.name + '</span>' +
+            '</div>';
         },
+        onSelect: function (e, term, item) {
+            var url = item.data('url');
+            window.location.href = url;
+        }
     });
 });

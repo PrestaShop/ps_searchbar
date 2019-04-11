@@ -32,6 +32,11 @@ use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
 
 class Ps_Searchbar extends Module implements WidgetInterface
 {
+    /**
+     * @var string Name of the module running on PS 1.6.x. Used for data migration.
+     */
+    const PS_16_EQUIVALENT_MODULE = 'blocksearch';
+
     private $templateFile;
 
     public function __construct()
@@ -53,6 +58,14 @@ class Ps_Searchbar extends Module implements WidgetInterface
 
     public function install()
     {
+        // Migrate data from 1.6 equivalent module (if applicable), then uninstall
+        if (Module::isInstalled(self::PS_16_EQUIVALENT_MODULE)) {
+            $oldModule = Module::getInstanceByName(self::PS_16_EQUIVALENT_MODULE);
+            if ($oldModule) {
+                $oldModule->uninstall();
+            }
+        }
+
         return parent::install()
             && $this->registerHook('top')
             && $this->registerHook('displaySearch')

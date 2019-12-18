@@ -7,12 +7,8 @@ $(document).ready(function () {
 
     $.widget('prestashop.psBlockSearchAutocomplete', $.ui.autocomplete, {
         _renderItem: function (ul, product) {
-            var $img = $('<div class="autocomplete-thumbnail">');
-            if (product.cover) {
-              $img.append('<img src="'+product.cover.bySize.small_default.url+'">')
-            } else {
-              $img.append('<img src="'+prestashop.urls.no_picture_image.bySize.small_default.url+'">')
-            }
+            var image = (product.cover) ? product.cover : prestashop.urls.no_picture_image;
+            var $img = $('<img class="autocomplete-thumbnail" src="'+image.bySize.small_default.url+'">');
             return $("<li>")
                 .append($("<a>")
                     .append($img)
@@ -64,10 +60,6 @@ $(document).ready(function () {
     });
 
     $searchBox.keyup(function() {
-        if ($searchBox.val() !== "" && isMobile()) {
-            $clearButton.show();
-        } else {
-            $clearButton.hide();
-        }
+        $clearButton.toggle($searchBox.val() !== "" && isMobile());
     });
 });

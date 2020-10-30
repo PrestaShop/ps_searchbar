@@ -23,7 +23,6 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  */
-
 if (!defined('_PS_VERSION_')) {
     exit;
 }
@@ -48,10 +47,10 @@ class Ps_Searchbar extends Module implements WidgetInterface
 
         parent::__construct();
 
-        $this->displayName = $this->trans('Search bar', array(), 'Modules.Searchbar.Admin');
-        $this->description = $this->trans('Help your visitors find what they are looking for, add a quick search field to your store.', array(), 'Modules.Searchbar.Admin');
+        $this->displayName = $this->trans('Search bar', [], 'Modules.Searchbar.Admin');
+        $this->description = $this->trans('Help your visitors find what they are looking for, add a quick search field to your store.', [], 'Modules.Searchbar.Admin');
 
-        $this->ps_versions_compliancy = array('min' => '1.7.1.0', 'max' => _PS_VERSION_);
+        $this->ps_versions_compliancy = ['min' => '1.7.1.0', 'max' => _PS_VERSION_];
 
         $this->templateFile = 'module:ps_searchbar/ps_searchbar.tpl';
     }
@@ -69,16 +68,18 @@ class Ps_Searchbar extends Module implements WidgetInterface
     {
         $this->context->controller->addJqueryUI('ui.autocomplete');
         $this->context->controller->registerStylesheet('modules-searchbar', 'modules/' . $this->name . '/ps_searchbar.css');
-        $this->context->controller->registerJavascript('modules-searchbar', 'modules/'.$this->name.'/ps_searchbar.js', ['position' => 'bottom', 'priority' => 150]);
+        $this->context->controller->registerJavascript('modules-searchbar', 'modules/' . $this->name . '/ps_searchbar.js', ['position' => 'bottom', 'priority' => 150]);
     }
 
     public function getWidgetVariables($hookName, array $configuration = [])
     {
-        $widgetVariables = array(
+        $widgetVariables = [
             'search_controller_url' => $this->context->link->getPageLink('search', null, null, null, false, null, true),
-        );
+        ];
 
-        if (!array_key_exists('search_string', $this->context->smarty->getTemplateVars())) {
+        /** @var array $templateVars */
+        $templateVars = $this->context->smarty->getTemplateVars();
+        if (is_array($templateVars) && !array_key_exists('search_string', $templateVars)) {
             $widgetVariables['search_string'] = '';
         }
 

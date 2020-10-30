@@ -2,7 +2,7 @@
 
 ## About
 
-Adds a quick search field to your PrestaShop.
+Help your visitors find what they are looking for, add a quick search field to your store.
 
 ## Multistore compatibility
 

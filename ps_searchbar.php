@@ -42,7 +42,7 @@ class Ps_Searchbar extends Module implements WidgetInterface
     {
         $this->name = 'ps_searchbar';
         $this->author = 'PrestaShop';
-        $this->version = '2.0.1';
+        $this->version = '2.0.2';
         $this->need_instance = 0;
 
         parent::__construct();

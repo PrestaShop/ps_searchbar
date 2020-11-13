@@ -2,7 +2,7 @@
 <module>
 	<name>ps_searchbar</name>
 	<displayName><![CDATA[Search bar]]></displayName>
-	<version><![CDATA[2.0.1]]></version>
+	<version><![CDATA[2.0.2]]></version>
 	<description><![CDATA[Adds a quick search bar to your website.]]></description>
 	<author><![CDATA[PrestaShop]]></author>
 	<is_configurable>0</is_configurable>

@@ -1,5 +1,9 @@
 # Search bar
 
+![PHP tests](https://github.com/PrestaShop/ps_searchbar/workflows/PHP%20tests/badge.svg)
+[![Latest Stable Version](https://poser.pugx.org/PrestaShop/ps_searchbar/v)](//packagist.org/packages/PrestaShop/ps_searchbar)
+
+
 ## About
 
 Help your visitors find what they are looking for, add a quick search field to your store.

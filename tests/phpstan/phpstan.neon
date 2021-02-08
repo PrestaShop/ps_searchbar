@@ -7,5 +7,9 @@ parameters:
     - ../../ps_searchbar.php
   ignoreErrors:
     - '#Call to method assign\(\) on an unknown class Smarty_Data#'
+    -
+      message: '#If condition is always true\.#'
+      count: 1
+      path: ../../ps_searchbar.php
   reportUnmatchedIgnoredErrors: false
   level: 5

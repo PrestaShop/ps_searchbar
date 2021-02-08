@@ -23,11 +23,12 @@
  * International Registered Trademark & Property of PrestaShop SA
  *}
 
-<div id="search_widget" class="search-widgets" data-search-controller-url="{$search_controller_url}">
-  <form method="get" action="{$search_controller_url}">
-    <input type="hidden" name="controller" value="search">
-    <i class="material-icons search">&#xE8B6;</i>
-    <input type="text" name="s" value="{$search_string}" placeholder="{l s='Search our catalog' d='Modules.Searchbar.Catalog'}" aria-label="{l s='Search' d='Shop.Theme.Catalog'}">
-    <i class="material-icons clear">&#xe14c;</i>
-  </form>
+<div id="search_widget" data-search-controller-url="{$search_controller_url}">
+	<form method="get" action="{$search_controller_url}">
+		<input type="hidden" name="controller" value="search">
+		<input type="text" name="s" value="{$search_string}">
+		<button type="submit">
+			{l s='Search' d='Modules.Searchbar.Shop'}
+		</button>
+	</form>
 </div>

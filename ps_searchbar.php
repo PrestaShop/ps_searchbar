@@ -36,6 +36,11 @@ use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
 
 class Ps_Searchbar extends Module implements WidgetInterface
 {
+    /**
+     * @var string Name of the module running on PS 1.6.x. Used for data migration.
+     */
+    const PS_16_EQUIVALENT_MODULE = 'blocksearch';
+
     private $templateFile;
 
     public function __construct()
@@ -50,13 +55,21 @@ class Ps_Searchbar extends Module implements WidgetInterface
         $this->displayName = $this->trans('Search bar', [], 'Modules.Searchbar.Admin');
         $this->description = $this->trans('Help your visitors find what they are looking for, add a quick search field to your store.', [], 'Modules.Searchbar.Admin');
 
-        $this->ps_versions_compliancy = ['min' => '1.7.8.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '1.7.1.0', 'max' => _PS_VERSION_];
 
         $this->templateFile = 'module:ps_searchbar/ps_searchbar.tpl';
     }
 
     public function install()
     {
+        // Migrate data from 1.6 equivalent module (if applicable), then uninstall
+        if (Module::isInstalled(self::PS_16_EQUIVALENT_MODULE)) {
+            $oldModule = Module::getInstanceByName(self::PS_16_EQUIVALENT_MODULE);
+            if ($oldModule) {
+                $oldModule->uninstall();
+            }
+        }
+
         return parent::install()
             && $this->registerHook('top')
             && $this->registerHook('displaySearch')
@@ -67,7 +80,6 @@ class Ps_Searchbar extends Module implements WidgetInterface
     public function hookHeader()
     {
         $this->context->controller->addJqueryUI('ui.autocomplete');
-        $this->context->controller->registerStylesheet('modules-searchbar', 'modules/' . $this->name . '/ps_searchbar.css');
         $this->context->controller->registerJavascript('modules-searchbar', 'modules/' . $this->name . '/ps_searchbar.js', ['position' => 'bottom', 'priority' => 150]);
     }
 

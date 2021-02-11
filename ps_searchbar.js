@@ -7,14 +7,26 @@ $(document).ready(function () {
 
     $.widget('prestashop.psBlockSearchAutocomplete', $.ui.autocomplete, {
         _renderItem: function (ul, product) {
-            var image = (product.cover) ? product.cover : prestashop.urls.no_picture_image;
-            var $img = $('<img class="autocomplete-thumbnail" src="'+image.bySize.small_default.url+'">');
-            return $("<li>")
-                .append($("<a>")
-                    .append($img)
-                    .append($("<span>").html(product.name).addClass("product"))
-                ).appendTo(ul)
-            ;
+            if (product.show_price) {
+                return $("<li>")
+    .append($("<img>").attr("src",product.cover.bySize.home_default.url).addClass("product-img"))
+                    .append($("<a>")
+                        .append($("<span>").html(product.category_name).addClass("category"))
+                        .append($("<span>").html(' > ').addClass("separator"))
+                        .append($("<span>").html(product.name).addClass("product"))
+    .append($("<span>").html(product.price).addClass("price"))
+                    ).appendTo(ul)
+                ;
+            } else {
+                return $("<li>")
+                    .append($("<img>").attr("src",product.cover.bySize.home_default.url).addClass("product-img"))
+                    .append($("<a>")
+                        .append($("<span>").html(product.category_name).addClass("category"))
+                        .append($("<span>").html(' > ').addClass("separator"))
+                        .append($("<span>").html(product.name).addClass("product"))
+                    ).appendTo(ul)
+                ;
+            }
         }
     });
 

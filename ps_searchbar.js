@@ -9,7 +9,7 @@ $(document).ready(function () {
         _renderItem: function (ul, product) {
             var image = (product.cover) ? product.cover : prestashop.urls.no_picture_image;
             var $img = $('<img class="autocomplete-thumbnail" src="'+image.bySize.small_default.url+'">');
-            var $price = (product.show_price) ? $("<span>").html(product.price).addClass("price") : "";
+            var $price = (product.show_price) ? $('<span>').html(product.price).addClass('price') : '';
             return $("<li>")
                 .append($("<a>")
                     .append($img)

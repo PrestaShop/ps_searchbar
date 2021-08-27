@@ -25,17 +25,16 @@
  */
 
 // In the latest version PrestaShop 1.7.8 the override for this module in classic theme was removed
-// because the module is now self-sufficient, so we remove it from the theme to make sure the correct
+// because the module is now self-sufficient, so we disable it from the theme to make sure the correct
 // internal template is used (we only clean the theme from core classic theme, and only if it was not
 // updated). Since this version of the module is only compatible starting PS 1.7.8 this clean can always
 // be performed regardless of the current PrestaShop version.
-// We check that the file matches the latest MD5 from this PR https://github.com/PrestaShop/PrestaShop/pull/22032
-// when it was removed
+// We don't delete the file but rather rename it so that the merchant can perform a rollback in case important
+// changes were present in the file
 
 if (defined('_PS_ROOT_DIR_')) {
-    $coreThemeFileChecksum = 'a37c4a845628588260b776d747905b0a';
     $coreThemeFile = realpath(_PS_ROOT_DIR_ . '/themes/classic/modules/ps_searchbar/ps_searchbar.tpl');
-    if (file_exists($coreThemeFile) && md5_file($coreThemeFile) === $coreThemeFileChecksum) {
-        @unlink($coreThemeFile);
+    if (file_exists($coreThemeFile)) {
+        @rename($coreThemeFile, $coreThemeFile . '.bak');
     }
 }

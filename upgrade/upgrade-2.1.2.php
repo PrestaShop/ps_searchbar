@@ -24,6 +24,10 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  */
 
+if (!defined('_PS_VERSION_')) {
+    exit;
+}
+
 // In the latest version PrestaShop 1.7.8 the override for this module in classic theme was removed
 // because the module is now self-sufficient, so we disable it from the theme to make sure the correct
 // internal template is used (we only clean the theme from core classic theme, and only if it was not
@@ -32,9 +36,14 @@
 // We don't delete the file but rather rename it so that the merchant can perform a rollback in case important
 // changes were present in the file
 
-if (defined('_PS_ROOT_DIR_')) {
-    $coreThemeFile = realpath(_PS_ROOT_DIR_ . '/themes/classic/modules/ps_searchbar/ps_searchbar.tpl');
-    if (file_exists($coreThemeFile)) {
-        @rename($coreThemeFile, $coreThemeFile . '.bak');
+function upgrade_module_2_1_2()
+{
+    if (defined('_PS_ROOT_DIR_')) {
+        $coreThemeFile = realpath(_PS_ROOT_DIR_ . '/themes/classic/modules/ps_searchbar/ps_searchbar.tpl');
+        if (file_exists($coreThemeFile)) {
+            @rename($coreThemeFile, $coreThemeFile . '.bak');
+        }
     }
+
+    return true;
 }

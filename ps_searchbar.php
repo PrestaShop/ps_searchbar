@@ -71,13 +71,13 @@ class Ps_Searchbar extends Module implements WidgetInterface
         }
 
         return parent::install()
-            && $this->registerHook('top')
+            && $this->registerHook('displayTop')
             && $this->registerHook('displaySearch')
-            && $this->registerHook('header')
+            && $this->registerHook('displayHeader')
         ;
     }
 
-    public function hookHeader()
+    public function hookDisplayHeader()
     {
         $this->context->controller->addJqueryUI('ui.autocomplete');
         $this->context->controller->registerStylesheet('modules-searchbar', 'modules/' . $this->name . '/ps_searchbar.css');

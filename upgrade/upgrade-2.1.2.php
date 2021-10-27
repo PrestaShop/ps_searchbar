@@ -37,6 +37,11 @@ if (!defined('_PS_VERSION_')) {
 
 function upgrade_module_2_1_2()
 {
+    $module->unregisterHook('top');
+    $module->registerHook('displayTop');
+    $module->unregisterHook('header');
+    $module->registerHook('displayHeader');
+
     if (defined('_PS_ROOT_DIR_')) {
         $coreThemeFile = realpath(_PS_ROOT_DIR_ . '/themes/classic/modules/ps_searchbar/ps_searchbar.tpl');
         if (file_exists($coreThemeFile)) {

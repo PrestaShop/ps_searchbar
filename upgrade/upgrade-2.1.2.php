@@ -35,7 +35,7 @@ if (!defined('_PS_VERSION_')) {
 // We don't delete the file but rather rename it so that the merchant can perform a rollback in case important
 // changes were present in the file
 
-function upgrade_module_2_1_2()
+function upgrade_module_2_1_2($module)
 {
     $module->unregisterHook('top');
     $module->registerHook('displayTop');

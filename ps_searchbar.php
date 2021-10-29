@@ -47,7 +47,7 @@ class Ps_Searchbar extends Module implements WidgetInterface
     {
         $this->name = 'ps_searchbar';
         $this->author = 'PrestaShop';
-        $this->version = '2.1.1';
+        $this->version = '2.1.2';
         $this->need_instance = 0;
 
         parent::__construct();
@@ -71,13 +71,13 @@ class Ps_Searchbar extends Module implements WidgetInterface
         }
 
         return parent::install()
-            && $this->registerHook('top')
+            && $this->registerHook('displayTop')
             && $this->registerHook('displaySearch')
-            && $this->registerHook('header')
+            && $this->registerHook('displayHeader')
         ;
     }
 
-    public function hookHeader()
+    public function hookDisplayHeader()
     {
         $this->context->controller->addJqueryUI('ui.autocomplete');
         $this->context->controller->registerStylesheet('modules-searchbar', 'modules/' . $this->name . '/ps_searchbar.css');

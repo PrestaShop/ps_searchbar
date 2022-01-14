@@ -46,6 +46,7 @@ class Ps_Searchbar extends Module implements WidgetInterface
     public function __construct()
     {
         $this->name = 'ps_searchbar';
+        $this->tab = 'front_office_features';
         $this->author = 'PrestaShop';
         $this->version = '2.1.2';
         $this->need_instance = 0;

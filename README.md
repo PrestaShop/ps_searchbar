@@ -8,6 +8,10 @@
 
 Help your visitors find what they are looking for, add a quick search field to your store.
 
+## Compatibility
+
+PrestaShop: `1.7.8.0` or later
+
 ## Multistore compatibility
 
 This module is compatible with the multistore :heavy_check_mark: <br/>

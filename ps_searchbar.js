@@ -47,19 +47,19 @@ $(document).ready(function () {
         },
     }).psBlockSearchAutocomplete("widget").addClass('searchbar-autocomplete');
 
-    $(window).resize(function() {
+    $(window).on("resize", function() {
       $searchBox.psBlockSearchAutocomplete({
         position: autocompletePosition(),
       });
-      $searchBox.keyup();
+      $searchBox.trigger("keyup");
     });
 
-    $clearButton.click(function() {
+    $clearButton.on("click", function() {
         $searchBox.val("");
         $clearButton.hide();
     });
 
-    $searchBox.keyup(function() {
+    $searchBox.on("keyup", function() {
         $clearButton.toggle($searchBox.val() !== "" && isMobile());
     });
 });

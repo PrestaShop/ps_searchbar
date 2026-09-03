@@ -67,3 +67,33 @@
     min-width: 16.5rem;
   }
 }
+
+/* The stylesheet above is written for left-to-right reading: the clear icon is pinned to the
+ * right, the input reserves its left padding for the magnifier, the autocomplete thumbnail floats
+ * left and the widget floats right. None of that is mirrored automatically - this file is not one
+ * of the stylesheets PrestaShop generates an RTL counterpart for - so the rules are mirrored here,
+ * against the lang-rtl class the front controller puts on the body for right-to-left languages. */
+.lang-rtl #search_widget form i.clear {
+  right: auto;
+  left: 15px;
+}
+
+.lang-rtl #search_widget form input {
+  padding: 10px 40px 10px 20px;
+}
+
+.lang-rtl .ui-autocomplete.searchbar-autocomplete li a .autocomplete-thumbnail {
+  float: right;
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+@media only screen and (min-width: 768px) {
+  .lang-rtl #search_widget {
+    float: left;
+  }
+
+  .lang-rtl .ui-autocomplete.searchbar-autocomplete {
+    right: auto;
+  }
+}

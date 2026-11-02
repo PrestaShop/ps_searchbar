@@ -80,9 +80,16 @@ class Ps_Searchbar extends Module implements WidgetInterface
 
     public function hookDisplayHeader()
     {
-        $this->context->controller->addJqueryUI('ui.autocomplete');
+        // A theme with its own search script sets this key to 0 in its theme.yml; unset means enabled.
+        $useJqueryUi = Configuration::get('PS_USE_JQUERY_UI_AUTOCOMPLETE') !== '0';
+
+        if ($useJqueryUi) {
+            $this->context->controller->addJqueryUI('ui.autocomplete');
+        }
         $this->context->controller->registerStylesheet('modules-searchbar', 'modules/' . $this->name . '/ps_searchbar.css');
-        $this->context->controller->registerJavascript('modules-searchbar', 'modules/' . $this->name . '/ps_searchbar.js', ['position' => 'bottom', 'priority' => 150]);
+        if ($useJqueryUi) {
+            $this->context->controller->registerJavascript('modules-searchbar', 'modules/' . $this->name . '/ps_searchbar.js', ['position' => 'bottom', 'priority' => 150]);
+        }
     }
 
     public function getWidgetVariables($hookName, array $configuration = [])
